@@ -1,0 +1,4 @@
+target/*
+Cargo.lock
+day01.iml
+.idea/*
