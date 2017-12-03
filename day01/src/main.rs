@@ -1,29 +1,30 @@
 use std::fs::File;
 use std::io::prelude::*;
 
-fn traverse_digits(input: &Vec<u8>) -> u32
+extern crate common;
+
+fn traverse_digits(input: &Vec<u8>, part: usize) -> u32
 {
-    let mut first: u8 = 0;
-    let mut last_traversed: u8 = 0;
     let mut sum: u32 = 0;
-    let mut last: u8 = 0;
+
+    let half = if part == 0 {
+        1
+    } else {
+        input.len() / 2
+    };
+
     for (i, digit) in input.iter().enumerate() {
         let d = *digit;
-        if i == 0 {
-            first = d;
-        } else if last_traversed == d {
+        let next = if i + half < input.len() {
+            input[i + half]
+        } else {
+            let diff = input.len() - i;
+            input[half - diff]
+        };
+
+        if next == d {
             sum += d as u32;
         }
-
-        if input.len() > i {
-            last = d;
-        }
-
-        last_traversed = d;
-    }
-
-    if last == first {
-        sum += last as u32;
     }
 
     sum
@@ -31,6 +32,8 @@ fn traverse_digits(input: &Vec<u8>) -> u32
 
 pub fn main() {
     const RADIX: u32 = 10;
+
+    let part = common::get_part();
 
     let mut file = File::open("input.txt").unwrap();
     let mut contents = String::new();
@@ -42,8 +45,7 @@ pub fn main() {
         input.push(d);
     }
 
+    let sum = traverse_digits(&input, part);
 
-    let sum = traverse_digits(&input);
-
-    println!("{:?}", sum);
+    println!("sum: {:?}", sum);
 }

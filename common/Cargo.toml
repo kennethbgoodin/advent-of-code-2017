@@ -1,7 +1,10 @@
 [package]
-name = "day01"
+name = "common"
 version = "0.1.0"
 authors = ["Kenny Goodin <kennethbgoodin@gmail.com>"]
 
-[dependencies.common]
-path = "../common"
+[lib]
+name = "common"
+path = "mod.rs"
+
+[dependencies]
