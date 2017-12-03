@@ -35,12 +35,9 @@ pub fn main() {
 
     let part = common::get_part();
 
-    let mut file = File::open("input.txt").unwrap();
-    let mut contents = String::new();
-    file.read_to_string(&mut contents);
+    let mut input_text = common::read_input("input.txt");
     let mut input: Vec<u8> = Vec::new();
-
-    for c in contents.chars() {
+    for c in input_text.chars() {
         let d: u8 = c.to_digit(RADIX).unwrap() as u8;
         input.push(d);
     }
